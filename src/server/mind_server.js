@@ -10,7 +10,7 @@ let server;
 const connectedAgents = {};
 
 // Initialize the server
-export function createMindServer(port = 8080) {
+export function createMindServer(port = 8081) {
     const app = express();
     server = http.createServer(app);
     io = new Server(server);
@@ -32,7 +32,7 @@ export function createMindServer(port = 8080) {
             curAgentName = agentName;
             io.emit('agents-update', Object.keys(connectedAgents));
         });
-
+        
         socket.on('chat-message', (agentName, json) => {
             console.log(`${curAgentName} received message from ${agentName}: ${json}`);
             const agentSocket = connectedAgents[agentName];

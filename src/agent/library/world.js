@@ -298,6 +298,7 @@ export function shouldPlaceTorch(bot) {
     return false;
 }
 
+// World.js at the end
 export function getBiomeName(bot) {
     /**
      * Get the name of the biome the bot is in.
@@ -307,5 +308,5 @@ export function getBiomeName(bot) {
      * let biome = world.getBiomeName(bot);
      **/
     const biomeId = bot.world.getBiome(bot.entity.position);
-    return mc.getAllBiomes()[biomeId].name;
-}
+    return mc.getAllBiomes()[biomeId]?.name || "Unkown Biome";
+  }

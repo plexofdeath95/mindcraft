@@ -1,6 +1,4 @@
 {
-    "name": "andy",
-
-    "model": "gpt-4o-mini"
-
+    "name": "Blockrot",
+    "model": "gpt-4o"
 }
