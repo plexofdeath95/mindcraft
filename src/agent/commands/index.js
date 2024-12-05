@@ -214,6 +214,14 @@ export async function executeCommand(agent, message) {
         if (numArgs !== numParams(command))
             return `Command ${command.name} was given ${numArgs} args, but requires ${numParams(command)} args.`;
         else {
+            console.log("Executing command:", command.name, parsed.args);
+            if(command.name.includes("end")) {
+                if(agent.server_proxy && agent.server_proxy.connected)
+                    {
+                        console.log("Sending agent end goal to MindServer");
+                        agent.server_proxy.agentEndGoal(agent.name);
+                    }
+            }
             const result = await command.perform(agent, ...parsed.args);
             return result;
         }

@@ -2,7 +2,7 @@ import { AgentProcess } from './src/process/agent-process.js';
 import settings from './settings.js';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { createMindServer } from './src/server/mind_server.js';
+import { createMindServer, getIO } from './src/server/mind_server.js';
 
 function parseArguments() {
     return yargs(hideBin(process.argv))
@@ -21,7 +21,9 @@ function getProfiles(args) {
 
 async function main() {
     if (settings.host_mindserver) {
-        const mindServer = createMindServer();
+        await createMindServer();
+        console.log('IO instance:', getIO());
+        //getIO().emit('server-message', 'Hello from main.js');
     }
     
     const args = parseArguments();
@@ -29,10 +31,12 @@ async function main() {
     console.log(profiles);
     const { load_memory, init_message } = settings;
 
-    for (let i=0; i<profiles.length; i++) {
+    for (let i = 0; i < profiles.length; i++) {
         const agent = new AgentProcess();
         agent.start(profiles[i], load_memory, init_message, i);
+        
         await new Promise(resolve => setTimeout(resolve, 1000));
+        //getIO().emit('server-message', 'Hello from main.js');
     }
 }
 

@@ -241,3 +241,31 @@ async function _resumeSelfPrompter() {
     self_prompter_paused = false;
     agent.self_prompter.start();
 }
+
+
+export function recieveFromServer(message) {
+    console.log('Received server message:', message);
+
+    try {
+        // Parse the message JSON if it's a structured payload
+        const parsedMessage = JSON.parse(message);
+        
+        // Extract relevant fields from the parsed message
+        const { sender, content, start, end } = parsedMessage;
+
+        if (!sender || !content) {
+            console.error('Invalid server message format:', message);
+            return;
+        }
+
+        console.log("Passed to conversation agent:", sender, content);
+
+        // Schedule processing of the queued message
+        console.log("Handling message from server:", sender, content);
+        console.log("Agent:", agent);
+        agent.handleMessage('admin', content);
+
+    } catch (error) {
+        console.error('Error processing server message:', error);
+    }
+}

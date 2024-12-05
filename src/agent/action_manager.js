@@ -56,7 +56,7 @@ export class ActionManager {
         }
     }
 
-    async _executeAction(actionLabel, actionFn, timeout = 10) {
+    async _executeAction(actionLabel, actionFn, timeout = 700) {
         let TIMEOUT;
         try {
             console.log('executing code...\n');

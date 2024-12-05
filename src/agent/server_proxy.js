@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
-import { recieveFromBot, updateAgents } from './conversation.js';
+import { recieveFromBot, updateAgents, recieveFromServer } from './conversation.js';
 import settings from '../../settings.js';
 
 class ServerProxy {
@@ -29,11 +29,17 @@ class ServerProxy {
         });
 
         this.socket.on('chat-message', (agentName, json) => {
+            console.log('Recieved chat message from MindServer');
             recieveFromBot(agentName, json);
         });
 
         this.socket.on('agents-update', (agents) => {
             updateAgents(agents);
+        });
+
+        this.socket.on('server-message', (message) => {
+            console.log('Recieved server message from MindServer: STUFFFF');
+            recieveFromServer(message);
         });
     }
 
@@ -43,6 +49,16 @@ class ServerProxy {
             return;
         }
         this.socket.emit('register-agent', agentName);
+    }
+
+    agentEndGoal(agentName)
+    {
+        if (!this.connected) {
+            console.warn('Cannot send agent end goal: not connected to MindServer');
+            return;
+        }
+        console.log('Sending agent end goal to MindServer');
+        this.socket.emit('agent-end-goal', agentName);
     }
 
     getSocket() {

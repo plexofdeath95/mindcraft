@@ -17,6 +17,7 @@ import { serverProxy } from './server_proxy.js';
 export class Agent {
     async start(profile_fp, load_mem=false, init_message=null, count_id=0) {
         this.last_sender = null;
+        this.server_proxy = serverProxy;
         try {
             if (!profile_fp) {
                 throw new Error('No profile filepath provided');
@@ -186,11 +187,13 @@ export class Agent {
     }
 
     async handleMessage(source, message, max_responses=null) {
+        console.log("Handling message from", source, ":", message);
         if (!source || !message) {
-            console.warn('Received empty message from', source);
+            console.warn('handleMessage: Received empty message from', source);
             return false;
         }
-
+        //add next trace 
+        console.log('handleMessage: passed source check');
         let used_command = false;
         if (max_responses === null) {
             max_responses = settings.max_commands === -1 ? Infinity : settings.max_commands;
@@ -198,18 +201,21 @@ export class Agent {
         if (max_responses === -1){
             max_responses = Infinity;
         }
-
+        console.log('handleMessage: passed max_responses check');
         const self_prompt = source === 'system' || source === this.name;
         const from_other_bot = isOtherAgent(source);
-
+        console.log('handleMessage: passed self_prompt check');
         if (!self_prompt && !from_other_bot) { // from user, check for forced commands
             const user_command_name = containsCommand(message);
+            console.log('handleMessage: passed user_command_name check');
             if (user_command_name) {
                 if (!commandExists(user_command_name)) {
                     this.bot.chat(`Command '${user_command_name}' does not exist.`);
+                    console.log('command does not exist');
                     return false;
                 }
                 this.bot.chat(`*${source} used ${user_command_name.substring(1)}*`);
+                console.log('command exists');
                 if (user_command_name === '!newAction') {
                     // all user-initiated commands are ignored by the bot except for this one
                     // add the preceding message to the history to give context for newAction
