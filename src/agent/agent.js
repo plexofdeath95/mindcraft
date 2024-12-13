@@ -64,12 +64,14 @@ export class Agent {
                 console.log(this.name, 'logged in!');
                 
                 // Set skin for profile, requires Fabric Tailor. (https://modrinth.com/mod/fabrictailor)
-                if (this.prompter.profile.skin)
+                if (this.prompter.profile.skin){
                     console.log('Setting skin for', this.name);
-                    //this.bot.chat(`/skin set URL ${this.prompter.profile.skin.model} ${this.prompter.profile.skin.path}`);
-                else
+                    this.bot.chat(`/skin set test blockrot`);
+                }
+                else{
                     console.log('No skin provided for', this.name);
-                    //this.bot.chat(`/skin clear`);
+                    this.bot.chat(`/skin set test blockrot`);
+                }
             });
 
             const spawnTimeout = setTimeout(() => {
@@ -332,10 +334,10 @@ export class Agent {
         // newlines are interpreted as separate chats, which triggers spam filters. replace them with spaces
         message = message.replaceAll('\n', ' ');
 
-        // if (self_prompt) 
-        //     this.bot.chat(message);
-        // else
-        //     this.bot.whisper(to_player, message);
+        if (self_prompt) 
+             this.bot.chat(message);
+         //else
+             //this.bot.whisper(to_player, message);
     }
 
     startEvents() {

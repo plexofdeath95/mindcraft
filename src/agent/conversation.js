@@ -100,7 +100,7 @@ export function sendToBot(send_to, message, start=false) {
     if (settings.chat_bot_messages)
         agent.bot.chat(`(To ${send_to}) ${message}`);
     if (!isOtherAgent(send_to)) {
-        agent.bot.whisper(send_to, message);
+        //agent.bot.whisper(send_to, message);
         return;
     }
     const convo = _getConvo(send_to);

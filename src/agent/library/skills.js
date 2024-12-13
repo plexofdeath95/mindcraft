@@ -923,7 +923,7 @@ export async function goToPosition(bot, x, y, z, min_distance=2) {
         log(bot, `Missing coordinates, given x:${x} y:${y} z:${z}`);
         return false;
     }
-    if (true) {
+    if (bot.modes.isOn('cheat')) {
         bot.chat('/tp @s ' + x + ' ' + y + ' ' + z);
         log(bot, `Teleported to ${x}, ${y}, ${z}.`);
         return true;
