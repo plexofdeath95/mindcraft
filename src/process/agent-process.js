@@ -18,14 +18,18 @@ export class AgentProcess {
         });
         AgentProcess.runningCount++;
         
-        let last_restart = Date.now();
+        let restartAttempts = {}; // To track restart attempts per profile
+
         agentProcess.on('exit', (code, signal) => {
             console.log(`Agent process exited with code ${code} and signal ${signal}`);
-            
-            if (code !== 0) {
-                // agent must run for at least 10 seconds before restarting
-                if (Date.now() - last_restart < 10000) {
-                    console.error(`Agent process ${profile} exited too quickly and will not be restarted.`);
+        
+            if (!restartAttempts[profile]) {
+                restartAttempts[profile] = 0; // Initialize restart attempts for this profile
+            }
+        
+            const tryRestart = () => {
+                if (restartAttempts[profile] >= 5) {
+                    console.error(`Agent process ${profile} has failed to restart 5 times. Giving up.`);
                     AgentProcess.runningCount--;
                     if (AgentProcess.runningCount <= 0) {
                         console.error('All agent processes have ended. Exiting.');
@@ -33,12 +37,26 @@ export class AgentProcess {
                     }
                     return;
                 }
-                console.log('Restarting agent...');
+        
+                restartAttempts[profile]++;
+                console.log(`Restart attempt ${restartAttempts[profile]} for agent process ${profile}`);
+        
                 this.start(profile, true, 'Agent process restarted.', count_id);
-                last_restart = Date.now();
+        
+                // Check if the process exited quickly, and retry after a delay
+                setTimeout(() => {
+                    if (restartAttempts[profile] < 5) {
+                        tryRestart();
+                    }
+                }, 10000); // Retry after 10 seconds
+            };
+        
+            if (code !== 0) {
+                console.log('Restarting agent with timeout...');
+                tryRestart();
             }
         });
-    
+        
         agentProcess.on('error', (err) => {
             console.error('Agent process error:', err);
         });
