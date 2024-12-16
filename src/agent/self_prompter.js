@@ -7,6 +7,10 @@ export class SelfPrompter {
         this.prompt = '';
         this.idle_time = 0;
         this.cooldown = 2000;
+        this.timeSinceLastPromptEnd = 0;
+        this.waitCooldown = 10000;
+        //set up a cancellable timer for the self-prompter if intterupted by a user message
+        this.timer = null;
     }
 
     start(prompt) {
@@ -32,6 +36,11 @@ export class SelfPrompter {
         if (this.loop_active) {
             console.warn('Self-prompt loop is already active. Ignoring request.');
             return;
+        }
+        //cancel the timer if it is running
+        if (this.timer) {
+            clearTimeout(this.timer);
+            this.timer = null;
         }
         console.log('starting self-prompt loop')
         this.loop_active = true;
@@ -97,6 +106,26 @@ export class SelfPrompter {
         if (stop_action)
             await this.agent.actions.stop();
         await this.stopLoop();
+        // set a timeer to resume the self-prompter after a delay if it was not stopped by a user message
+        //list of 20 random minecraft prompts the agent can accomplish
+        const prompts = 
+        [
+            "find diamonds at y=-54",
+            "make a full set of diamond armor",
+            "make a diamond sword",
+            "make a diamond pickaxe",
+            "make a diamond axe",
+            "prepare for the ender dragon fight",
+            "explore the nether",
+            "build a house",
+            "make a farm",
+            "make a mob farm",
+            "make a redstone contraption",
+            "go kill the ender dragon",
+        ]
+        this.timer = setTimeout(() => {
+            this.start(prompts[Math.floor(Math.random() * prompts.length)]);
+        }, this.waitCooldown);
         this.on = false;
     }
 
