@@ -72,6 +72,28 @@ export class Agent {
                     console.log('No skin provided for', this.name);
                     this.bot.chat(`/skin set test blockrot`);
                 }
+
+                // set a 5 second timeout and get the bot started on a task
+                const prompts = 
+                [
+                    "find diamonds at y=-54",
+                    "make a full set of diamond armor",
+                    "make a diamond sword",
+                    "make a diamond pickaxe",
+                    "make a diamond axe",
+                    "prepare for the ender dragon fight",
+                    "explore the nether",
+                    "build a house",
+                    "make a farm",
+                    "make a mob farm",
+                    "make a redstone contraption",
+                    "go kill the ender dragon",
+                ]
+                //set a timeout and start the self-prompter
+                setTimeout(() => {
+                    this.self_prompter.start(prompts[Math.floor(Math.random() * prompts.length)]);
+                }, 5000);
+
             });
 
             const spawnTimeout = setTimeout(() => {
