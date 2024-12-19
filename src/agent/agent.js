@@ -76,7 +76,7 @@ export class Agent {
                 // set a 5 second timeout and get the bot started on a task
                 const prompts = 
                 [
-                    "kill everything around you, never stop, always wear the best gear you have in your inventory, always use a sword or an axe, do not craft it, you will get better gear by killing mobs"
+                    "kill everything around you, never stop, always wear the best gear you have in your inventory, always use a sword or an axe, do not craft it, you will get better gear by killing mobs, you can find mobs by going to X:-38, Z:161"
                 ]
                 //set a timeout and start the self-prompter
                 setTimeout(() => {

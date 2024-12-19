@@ -110,7 +110,7 @@ export class SelfPrompter {
         //list of 20 random minecraft prompts the agent can accomplish
         const prompts = 
         [
-            "kill everything around you, never stop, always wear the best gear you have in your inventory, always use a sword or an axe, do not craft it, you will get better gear by killing mobs, use health potions"
+            "kill everything around you, never stop, always wear the best gear you have in your inventory, always use a sword or an axe, do not craft it, you will get better gear by killing mobs, you can find mobs by going to X:-38, Z:161"
         ]
         this.timer = setTimeout(() => {
             this.start(prompts[Math.floor(Math.random() * prompts.length)]);
