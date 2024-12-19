@@ -110,18 +110,7 @@ export class SelfPrompter {
         //list of 20 random minecraft prompts the agent can accomplish
         const prompts = 
         [
-            "find diamonds at y=-54",
-            "make a full set of diamond armor",
-            "make a diamond sword",
-            "make a diamond pickaxe",
-            "make a diamond axe",
-            "prepare for the ender dragon fight",
-            "explore the nether",
-            "build a house",
-            "make a farm",
-            "make a mob farm",
-            "make a redstone contraption",
-            "go kill the ender dragon",
+            "kill everything around you, never stop, always wear the best gear you have in your inventory, always use a sword or an axe, do not craft it, you will get better gear by killing mobs, use health potions"
         ]
         this.timer = setTimeout(() => {
             this.start(prompts[Math.floor(Math.random() * prompts.length)]);
