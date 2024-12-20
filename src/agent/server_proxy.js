@@ -39,7 +39,7 @@ class ServerProxy {
 
         this.socket.on('server-message', (message) => {
             console.log('Recieved server message from MindServer: STUFFFF');
-            recieveFromServer(message);
+            //recieveFromServer(message);
         });
     }
 
@@ -58,7 +58,7 @@ class ServerProxy {
             return;
         }
         console.log('Sending agent end goal to MindServer');
-        this.socket.emit('agent-end-goal', agentName);
+        //this.socket.emit('agent-end-goal', agentName);
     }
 
     getSocket() {
@@ -70,5 +70,5 @@ class ServerProxy {
 export const serverProxy = new ServerProxy();
 
 export function sendBotChatToServer(agentName, json) {
-    serverProxy.getSocket().emit('chat-message', agentName, json);
+    //serverProxy.getSocket().emit('chat-message', agentName, json);
 }

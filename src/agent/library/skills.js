@@ -293,7 +293,7 @@ export async function attackNearest(bot, mobType, kill=true) {
     bot.modes.pause('cowardice');
     if (mobType === 'drowned' || mobType === 'cod' || mobType === 'salmon' || mobType === 'tropical_fish' || mobType === 'squid')
         bot.modes.pause('self_preservation'); // so it can go underwater. TODO: have an drowning mode so we don't turn off all self_preservation
-    const mob = world.getNearbyEntities(bot, 24).find(entity => entity.name === mobType);
+    const mob = world.getNearbyEntities(bot, 100).find(entity => entity.name === mobType);
     if (mob) {
         return await attackEntity(bot, mob, kill);
     }
@@ -326,7 +326,7 @@ export async function attackEntity(bot, entity, kill=true) {
     }
     else {
         bot.pvp.attack(entity);
-        while (world.getNearbyEntities(bot, 24).includes(entity)) {
+        while (world.getNearbyEntities(bot, 100).includes(entity)) {
             await new Promise(resolve => setTimeout(resolve, 1000));
             if (bot.interrupt_code) {
                 bot.pvp.stop();
@@ -486,6 +486,19 @@ export async function pickupNearbyItems(bot) {
         pickedUp++;
     }
     log(bot, `Picked up ${pickedUp} items.`);
+    return true;
+}
+
+export async function EquipBestArmorAndWeapon(bot) {
+    /**
+     * Equip the best armor and weapon in the bot's inventory.
+     * @param {MinecraftBot} bot, reference to the minecraft bot.
+     * @returns {Promise<boolean>} true if the armor and weapon were equipped, false otherwise.
+        * @example
+        * await skills.EquipBestArmorAndWeapon(bot);
+        * **/
+    await bot.armorManager.equipAll();
+    await equipHighestAttack(bot);
     return true;
 }
 

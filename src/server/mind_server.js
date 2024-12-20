@@ -45,7 +45,7 @@ export function createMindServer(port = 8081) {
 
             socket.on('server-message', (message) => {
                 //console.log('Received server message:', message);
-                socket.broadcast.emit('server-message', message);
+                //socket.broadcast.emit('server-message', message);
             });
         });
 

@@ -76,7 +76,7 @@ export class Agent {
                 // set a 5 second timeout and get the bot started on a task
                 const prompts = 
                 [
-                    "kill everything around you, never stop, always wear the best gear you have in your inventory, always use a sword or an axe, do not craft it, you will get better gear by killing mobs, you can find mobs by going to X:-38, Z:161"
+                    "kill everything around you, never stop, always wear the best gear you have in your inventory, always use a sword or an axe, do not craft it, you will get better gear by killing mobs"
                 ]
                 //set a timeout and start the self-prompter
                 setTimeout(() => {
@@ -400,7 +400,7 @@ export class Agent {
                     death_pos_text = `x: ${death_pos.x.toFixed(2)}, y: ${death_pos.y.toFixed(2)}, z: ${death_pos.x.toFixed(2)}`;
                 }
                 let dimention = this.bot.game.dimension;
-                this.handleMessage('system', `You died at position ${death_pos_text || "unknown"} in the ${dimention} dimension with the final message: '${message}'. Your place of death is saved as 'last_death_position' if you want to return. Previous actions were stopped and you have respawned.`);
+                //this.handleMessage('system', `You died at position ${death_pos_text || "unknown"} in the ${dimention} dimension with the final message: '${message}'. Your place of death is saved as 'last_death_position' if you want to return. Previous actions were stopped and you have respawned.`);
             }
         });
         this.bot.on('idle', () => {

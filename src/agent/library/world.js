@@ -219,7 +219,7 @@ export function getNearbyEntityTypes(bot) {
      * @example
      * let mobs = world.getNearbyEntityTypes(bot);
      **/
-    let mobs = getNearbyEntities(bot, 16);
+    let mobs = getNearbyEntities(bot, 100);
     let found = [];
     for (let i = 0; i < mobs.length; i++) {
         if (!found.includes(mobs[i].name)) {
