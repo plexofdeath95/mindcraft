@@ -61,13 +61,13 @@ export const actionsList = [
             return;
         }
     },
-    {
-        name: '!restart',
-        description: 'Restart the agent process.',
-        perform: async function (agent) {
-            agent.cleanKill();
-        }
-    },
+    // {
+    //     name: '!restart',
+    //     description: 'Restart the agent process.',
+    //     perform: async function (agent) {
+    //         //agent.cleanKill();
+    //     }
+    // },
     {
         name: '!clearChat',
         description: 'Clear the chat history.',
