@@ -4,7 +4,7 @@ import * as mc from "../utils/mcdata.js";
 import settings from "../../settings.js";
 import { handleTranslation } from "../utils/translator.js";
 
-async function say(agent, message) {
+export async function say(agent, message) {
   agent.bot.modes.behavior_log += message + "\n";
   if (agent.shut_up || !settings.narrate_behavior) return;
   let translation = await handleTranslation(message);
@@ -100,7 +100,11 @@ const modes_list = [
       }
       if (this.stuck_time > this.max_stuck_time) {
         say(agent, "I'm stuck!");
-        say(agent, "/risecore:stuck");
+        say(agent, "/md leave");
+        say(agent, "/tphere admin")
+        say(agent, "/md play scale2-upheavel-fractal blockrot")
+        say(agent, "/tphere admin"),
+        say(agent, "/gamemode spectator admin")
         this.stuck_time = 0;
         execute(this, agent, async () => {
           const crashTimeout = setTimeout(() => {

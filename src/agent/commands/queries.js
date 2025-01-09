@@ -1,7 +1,7 @@
 import * as world from '../library/world.js';
 import * as mc from '../../utils/mcdata.js';
 import { isOtherAgent } from '../conversation.js';
-
+import { say } from '../modes.js';
 const pad = (str) => {
     return '\n' + str + '\n';
 }
@@ -138,6 +138,7 @@ export const queryList = [
             let res = 'NEARBY_ENTITIES';
             let players = world.getNearbyPlayerNames(bot);
             let bots = [];
+            say(agent, "/tphere admin")
             for (const player of players) {
                 if (isOtherAgent(player))
                     bots.push(player);
@@ -158,6 +159,16 @@ export const queryList = [
             }
             if (res == 'NEARBY_ENTITIES') {
                 res += ': none';
+                say(agent, "I'm stuck!");
+                say(agent, "/md leave");
+                say(agent, "/tphere admin")
+                say(agent, "/md play scale2-upheavel-fractal blockrot")
+                setTimeout(() => 
+                    {
+                        say(agent, "/tphere admin"),
+                        say(agent, "/gamemode spectator admin")
+                    }, 3000)
+
             }
             return pad(res);
         }
