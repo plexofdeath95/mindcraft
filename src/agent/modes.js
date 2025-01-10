@@ -137,6 +137,28 @@ const modes_list = [
     on: true,
     active: false,
     update: async function (agent) {
+      console.log("called 0");
+      const players = world.getNearbyPlayers(agent.bot, 200);
+      //check if player is nearby with distance of 8
+      try {
+        console.log("called one");
+        for (const player of players) {
+          if (
+            player &&
+            player.position.distanceTo(agent.bot.entity.position) < 8 &&
+            (await world.isClearPath(agent.bot, player))
+          ) {
+            console.log("called 2");
+            say(agent, `Aaa! A ${player.name}!`);
+            execute(this, agent, async () => {
+              await skills.attackEntity(agent.bot, player);
+            });
+            return;
+          }
+        }
+      } catch (err) {
+        console.error("some error", er);
+      }
       const enemy = world.getNearestEntityWhere(agent.bot, (entity) => mc.isHostile(entity), 8);
       if (enemy && (await world.isClearPath(agent.bot, enemy))) {
         say(agent, `Fighting ${enemy.name}!`);

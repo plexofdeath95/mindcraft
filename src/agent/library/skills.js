@@ -331,86 +331,36 @@ export async function attackNearest(bot, mobType, kill = true) {
 
 export async function attackEntity(bot, entity, kill = true) {
   /**
-   * Attack the nearest player or mob of the given type.
+   * Attack mob of the given type.
    * @param {MinecraftBot} bot, reference to the minecraft bot.
    * @param {Entity} entity, the entity to attack.
-   * @returns {Promise<boolean>} true if the entity was attacked, false if interrupted or no entity found
+   * @returns {Promise<boolean>} true if the entity was attacked, false if interrupted
    * @example
    * await skills.attackEntity(bot, entity);
    **/
 
-  const players = world.getNearbyPlayerNames(bot);
-  let targetEntity = null;
-
-  // Find the nearest player
-  if (players.length > 0) {
-    let closestPlayer = null;
-    let closestDistance = Infinity;
-
-    for (const player of players) {
-      const distance = bot.entity.position.distanceTo(player.position);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestPlayer = player;
-      }
-    }
-
-    if (closestPlayer) {
-      targetEntity = closestPlayer;
-    }
-  }
-
-  // If no players found, find the nearest mob
-  if (!targetEntity) {
-    const nearbyEntities = world.getNearbyEntities(bot, 24);
-    let closestMob = null;
-    let closestDistance = Infinity;
-
-    for (const entity of nearbyEntities) {
-      if (entity.type !== "player") {
-        // Ensure it's not a player
-        const distance = bot.entity.position.distanceTo(entity.position);
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closestMob = entity;
-        }
-      }
-    }
-
-    if (closestMob) {
-      targetEntity = closestMob;
-    }
-  }
-
-  // If no target entity found, cancel
-  if (!targetEntity) {
-    console.log("No nearby players or mobs to attack.");
-    return false;
-  }
-
-  // Attack the target entity
-  let pos = targetEntity.position;
+  let pos = entity.position;
   console.log(bot.entity.position.distanceTo(pos));
 
   await equipHighestAttack(bot);
 
   if (!kill) {
     if (bot.entity.position.distanceTo(pos) > 5) {
-      console.log("Moving to target...");
+      console.log("moving to mob...");
       await goToPosition(bot, pos.x, pos.y, pos.z);
     }
-    console.log("Attacking target...");
-    await bot.attack(targetEntity);
+    console.log("attacking mob...");
+    await bot.attack(entity);
   } else {
-    bot.pvp.attack(targetEntity);
-    while (world.getNearbyEntities(bot, 24).includes(targetEntity)) {
+    bot.pvp.attack(entity);
+    while (world.getNearbyEntities(bot, 100).includes(entity)) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       if (bot.interrupt_code) {
         bot.pvp.stop();
         return false;
       }
     }
-    log(bot, `Successfully killed ${targetEntity.name}.`);
+    log(bot, `Successfully killed ${entity.name}.`);
     await pickupNearbyItems(bot);
     return true;
   }

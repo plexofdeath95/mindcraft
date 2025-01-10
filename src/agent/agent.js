@@ -92,11 +92,17 @@ export class Agent {
         setTimeout(() => {
           // this.self_prompter.start(prompts[Math.floor(Math.random() * prompts.length)]);
           this.bot.chat("/pa christmasarena join");
+        }, 2500);
+        setTimeout(() => {
+          // this.self_prompter.start(prompts[Math.floor(Math.random() * prompts.length)]);
           this.bot.chat("/pa ready");
+        }, 10000);
+        setTimeout(() => {
+          // this.self_prompter.start(prompts[Math.floor(Math.random() * prompts.length)]);
           this.self_prompter.start(
             "Your aim is to kill any player or mob that you see or find in a 100 block radius. Give priority to killing players over mobs. Your goal is to pickup any dropped items that are better than your current equipped armor or weapon, and then use that. Do not pick the items if they are not as good as your current item. You have to keep killing the players, otherwise the mobs that you see and pickup good drops. You cannot dig out of the place."
           );
-        }, 5000);
+        }, 2500);
       });
 
       const spawnTimeout = setTimeout(() => {
