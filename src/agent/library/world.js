@@ -219,7 +219,7 @@ export function getNearbyEntityTypes(bot) {
      * @example
      * let mobs = world.getNearbyEntityTypes(bot);
      **/
-    let mobs = getNearbyEntities(bot, 16);
+    let mobs = getNearbyEntities(bot, 5);
     let found = [];
     for (let i = 0; i < mobs.length; i++) {
         if (!found.includes(mobs[i].name)) {
@@ -238,7 +238,7 @@ export function getNearbyPlayerNames(bot) {
      * @example
      * let players = world.getNearbyPlayerNames(bot);
      **/
-    let players = getNearbyPlayers(bot, 16);
+    let players = getNearbyPlayers(bot, 200);
     let found = [];
     for (let i = 0; i < players.length; i++) {
         if (!found.includes(players[i].username) && players[i].username != bot.username) {

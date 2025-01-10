@@ -11,6 +11,9 @@ export default {
 
   profiles: [
     "./andy.json",
+    "./andy1.json",
+    "./andy2.json",
+    "./andy3.json",
     // "./profiles/gpt.json",
     // "./profiles/claude.json",
     // "./profiles/gemini.json",

@@ -157,7 +157,7 @@ const modes_list = [
       if (huntable && (await world.isClearPath(agent.bot, huntable))) {
         execute(this, agent, async () => {
           say(agent, `Hunting ${huntable.name}!`);
-          await skills.attackEntity(agent.bot, huntable);
+          await skills.attackEntity(agent.bot, huntable, true);
         });
       }
     },
