@@ -137,11 +137,11 @@ const modes_list = [
     on: true,
     active: false,
     update: async function (agent) {
-      console.log("called 0");
+      //console.log("called 0");
       const players = world.getNearbyPlayers(agent.bot, 200);
       //check if player is nearby with distance of 8
       try {
-        console.log("called one");
+        //console.log("called one");
         for (const player of players) {
           if (
             player &&
@@ -191,7 +191,7 @@ const modes_list = [
     on: true,
     active: false,
 
-    wait: 2, // number of seconds to wait after noticing an item to pick it up
+    wait: 0.5, // number of seconds to wait after noticing an item to pick it up
     prev_item: null,
     noticed_at: -1,
     update: async function (agent) {

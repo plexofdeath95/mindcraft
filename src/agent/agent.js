@@ -65,11 +65,13 @@ export class Agent {
 
         // Set skin for profile, requires Fabric Tailor. (https://modrinth.com/mod/fabrictailor)
         if (this.prompter.profile.skin) {
-          console.log("Setting skin for", this.name);
-          this.bot.chat(`/skin set test blockrot`);
+          console.log("Setting skin for", this.name, this.prompter.profile.skin);
+          setTimeout(() => {
+            this.bot.chat(`/skin set ${this.prompter.profile.skin} ${this.prompter.profile.name}`);
+          }, 2000);
         } else {
           console.log("No skin provided for", this.name);
-          this.bot.chat(`/skin set test blockrot`);
+          this.bot.chat(`/skin set test`);
         }
 
         // set a 5 second timeout and get the bot started on a task
