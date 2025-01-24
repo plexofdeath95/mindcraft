@@ -93,7 +93,7 @@ export class Agent {
         //set a timeout and start the self-prompter
         setTimeout(() => {
           // this.self_prompter.start(prompts[Math.floor(Math.random() * prompts.length)]);
-          this.bot.chat("/pa christmasarena join");
+          this.bot.chat("/pa fightarena join");
         }, 2500);
         setTimeout(() => {
           // this.self_prompter.start(prompts[Math.floor(Math.random() * prompts.length)]);
